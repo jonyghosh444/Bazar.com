@@ -7,19 +7,19 @@ def Index(request):
     return render(request, 'shop/index.html')
 
 def About(request):
-    return HttpResponse("About")
+    return render(request, 'shop/About.html')
 
 def Contact(request):
-    return HttpResponse("Contact")
+    return render(request, 'shop/Contact.html')
 
 def Tracker(request):
-    return HttpResponse("Tracker")
+    return render(request, 'shop/Tracker.html')
 
 def Search(request):
-    return HttpResponse("Search")
+    return render(request, 'shop/Search.html')
 
 def Productview(request):
-    return HttpResponse("Product view")
+    return render(request, 'shop/Productview.html')
 
 def Checkout(request):
-    return HttpResponse("Check out")
+    return render(request, 'shop/Checkout.html')
