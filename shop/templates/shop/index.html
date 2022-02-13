@@ -22,7 +22,7 @@
   <!-- slides start here -->
   {% for product, range, nSlides in allProds%}
   <div class="container py-4">
-  <h3>Man Fashion</h3>
+<h4 style="color: rgb(67, 67, 75); text-align: center; " > Flash sale on - {{product.0.category}}</h4>
   </div>
   <div id="carouselExampleDark{{forloop.counter}}" class="carousel carousel-dark slide my-2" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -42,9 +42,10 @@
               <div class="card" style="width: 13rem;">
                 <img src="/media/{{i.image}}" class="card-img-top" alt="..." style="width: 205px; height: 170px;">
                 <div class="card-body">
-                  <h6 class="card-title">{{i.product_name}}</h6>
-                  <p class="card-text">{{i.desc}}</p>
-                  <a href="#" class="btn btn-primary">Add to cart</a>
+                  <h5 class="card-title" style="text-align: center;">{{i.product_name}}</h5>
+                  <p class="card-text" style="text-align: center; opacity: 0.8;">{{i.desc|slice:"0:15"}}</p>
+                  <b><p class="card-text" style="text-align: center;">{{i.price}} BDT</p></b>
+                  <p class="my-3" style="text-align: center;"><a href="#" class="btn btn-primary" >Add to cart</a></p>
                 </div>
               </div>
             </div>
