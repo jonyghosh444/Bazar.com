@@ -7,10 +7,12 @@ from math import ceil
 
 def Index(request):
     products = Product.objects.all()
-    print(products)
     n = len(products)
-    no_of_slides = n//4+ceil(n/4-n//4)
-    params = {'no_of_slides': no_of_slides, 'range': range(1,no_of_slides), 'product': 'products'}
+    nSlides = n//6 + ceil((n/6)-(n//6))
+    allProds = [[products, range(1, nSlides), nSlides],
+                [products, range(1, nSlides), nSlides]]
+    params = {'allProds': allProds}
+    # params = {'no_of_slides': nSlides, 'range': range(1, nSlides), 'product': products}
     return render(request, 'shop/index.html', params)
 
 
