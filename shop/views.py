@@ -20,7 +20,6 @@ def Index(request):
         nSlides = n//6 + ceil((n/6) - (n//6))
         allProds.append([prod, range(1, nSlides), nSlides])
 
-
     params = {'allProds': allProds}
     # params = {'no_of_slides': nSlides, 'range': range(1, nSlides), 'product': products}
     return render(request, 'shop/index.html', params)
