@@ -11,7 +11,7 @@ class Product(models.Model):
     sub_category = models.CharField(max_length=50, default="")
     price = models.IntegerField(default=0)
     image = models.ImageField(upload_to="shop/image", default="")
-    desc = models.CharField(max_length=300)
+    desc = models.CharField(max_length=3000)
     pub_date = models.DateField()
 
     def __str__(self):

@@ -2,16 +2,51 @@
 
 {% block title %}{{product.0.product_name}}{% endblock %}
 {% block css %}
+.col-md-4 img{
+height: 520px;
+width: 450px;
 
 }
+
+
 {% endblock %}
 {% block body %}
 
+<div class="container">
+    
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-4 py-5">
 
-{{product.0.category}}
-{{product.0.id}}
-{{product.0.product_name}}
-<img src="/media/{{product.0.image}}" alt="">
+                <div class="conatiner mt-5 py-2">
+                    <img src="/media/{{product.image}}" alt="">
+
+                </div>
+                <div class="container py-3" style="text-align: center;">
+                    <button id="pr{{product.id}}" class="btn btn-primary mt-3 mx-1 cart" style="text-align: start;">Add To Cart</button>
+                    <button class="btn btn-primary mt-3 cart" style="text-align: end;">Buy Now</button>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-6 mx-5" >
+
+                <div class="container" style="text-align: center;">
+                    <h1>{{product.product_name}}</h1>
+                    <b><b>&#2547;</b>{{product.price}}</b>
+                    <p style="text-align: left;">{{product.desc}}</p>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-8" style="text-align: center;">
+            </div>
+        </div>
+    
+
+
+</div>
+
+
+
+
+
 
 
 {% endblock %}

@@ -29,7 +29,10 @@
             border-radius: 50%;
             overflow: hidden;
             margin-top: -6px;
+            
+
         }
+
         {% block css %}{% endblock %}
     </style>
 
@@ -43,7 +46,7 @@
                 <div class="logo-image">
 
 
-                    <img src="{% static 'shop/image/bazar1.png' %}"  class="img-fluid">
+                    <img src="{% static 'shop/image/bazar1.png' %}" class="img-fluid">
                 </div>
             </a>
             <a class="navbar-brand" href="/shop/">Bazar</a>
@@ -85,8 +88,9 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <button type="button" class="btn btn-secondary mx-3" data-id="popcart" data-bs-html="true" data-bs-container="body"
-                    data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+                <button type="button" class="btn btn-secondary mx-3" data-id="popcart" data-bs-html="true"
+                    data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom"
+                    data-bs-content="Bottom popover">
                     Cart(<span id="cart">0</span>)
                 </button>
 
@@ -96,6 +100,25 @@
 
 
     {% block body %}{% endblock %}
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <p class="col-md-4 mb-0 text-muted">&copy; 2022 Bazar.com</p>
+      
+          <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+          </a>
+      
+          <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contact</a></li>
+          </ul>
+        </footer>
+      </div>
+
+
+
 
     <!-- Optional JavaScript; choose one of the two! -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -114,7 +137,48 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous"></script>
-    {% block js %}{% endblock %}
+        <script>
+            // cart
+            console.log("working");
+            if(localStorage.getItem('cart') == null){
+              var cart = {};
+            }
+            else{
+              cart = JSON.parse(localStorage.getItem('cart'));
+              document.getElementById('cart').innerHTML = Object.keys(cart).length;
+            }
+          
+          // Adding item by click
+          $('.cart').click(function(){
+          
+            console.log('clicked');
+            idstr = this.id.toString();
+            console.log(idstr);
+            if (cart[idstr] != undefined){
+              cart[idstr] = cart[idstr] + 1;
+            }
+            else{
+              cart[idstr] = 1;
+            }
+            console.log(cart);
+            localStorage.setItem('cart', JSON.stringify(cart))
+            document.getElementById('cart').innerHTML = Object.keys(cart).length;
+            });
+          
+          
+          // popover
+          document.querySelector('[data-id="popcart"]').setAttribute('data-bs-content', '<h5>Cart for your items in myshoping cart</h5>');
+          var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-id="popcart"]'))
+          var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl,
+          
+              {
+                html: true
+              })
+          });
+          </script>
+
+
 </body>
 
 </html>
