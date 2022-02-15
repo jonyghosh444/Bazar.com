@@ -84,6 +84,8 @@
 </div>
 {% endblock %}
 
+
+
 {% block js %}
 <script>
   console.log("working");
@@ -110,6 +112,21 @@ $('.cart').click(function(){
   localStorage.setItem('cart', JSON.stringify(cart))
   document.getElementById('cart').innerHTML = Object.keys(cart).length;
   });
+
+document.getElementById("popcart").setAttribute('data-bs-content','<h6>Cart for your items in my shoping cart</h6>')
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[id="popcart"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, 
+
+    {
+      html: true
+    })
+})
+
+
+
+
+
 
 </script>
 {% endblock %}
