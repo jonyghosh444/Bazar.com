@@ -50,7 +50,8 @@
                   <p class="card-text" style="text-align: center; opacity: 0.8;">{{i.desc|slice:"0:15"}}</p>
                   <b><p class="card-text" style="text-align: center;">{{i.price}} BDT</p></b>
                   <div style="text-align: center;" >
-                  <button  id="pr{{i.id}}" class="btn btn-primary my-3 cart">Add To Cart</button>
+                  <button  id="pr{{i.id}}" class="btn btn-primary mt-3 cart">Add To Cart</button>
+                  <a href="/shop/product/{{i.id}}"><button  id="qv{{i.id}}" class="btn btn-info mt-1 mb-1">  QuickView  </button></a>
                   </div>
                 </div>
               </div>
@@ -88,6 +89,7 @@
 
 {% block js %}
 <script>
+  // cart
   console.log("working");
   if(localStorage.getItem('cart') == null){
     var cart = {};
@@ -97,6 +99,7 @@
     document.getElementById('cart').innerHTML = Object.keys(cart).length;
   }
 
+// Adding item by click
 $('.cart').click(function(){
 
   console.log('clicked');
@@ -113,15 +116,17 @@ $('.cart').click(function(){
   document.getElementById('cart').innerHTML = Object.keys(cart).length;
   });
 
-document.getElementById("popcart").setAttribute('data-bs-content','<h6>Cart for your items in my shoping cart</h6>')
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[id="popcart"]'))
-var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-  return new bootstrap.Popover(popoverTriggerEl, 
+
+// popover
+document.querySelector('[data-id="popcart"]').setAttribute('data-bs-content', '<h5>Cart for your items in myshoping cart</h5>');
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-id="popcart"]'))
+var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl,
 
     {
       html: true
     })
-})
+});
 
 
 

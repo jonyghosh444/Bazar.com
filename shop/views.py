@@ -41,8 +41,11 @@ def Search(request):
     return render(request, 'shop/Search.html')
 
 
-def Productview(request):
-    return render(request, 'shop/Productview.html')
+def ProductView(request, myid):
+    # fetching the product by id
+    product = Product.objects.filter(id=myid)
+    params = {"product": product}
+    return render(request, 'shop/ProductView.html', params)
 
 
 def Checkout(request):
