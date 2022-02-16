@@ -2,13 +2,53 @@
 
 {% block title %}About Us{% endblock %}
 {% block css %}
-.logo-image {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-top: -6px;
+.about{
+  color: rgb(3, 6, 61);
+  padding-top: 50px;
+  font-size: large;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: initial;
+  padding-top: 150px; 
 }
+.image{
+  padding-top: 50px;
+  height: 300px;
+  width: 350px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 {% endblock %}
-{% block body %}About Us{% endblock %}
+
+{% block body %}
+<style>
+
+</style>
+
+{% load static %}
+<div class="container" >
+  <img src="{% static 'shop/image/logo.png' %}" alt="" class="image">
+</div>
+
+<div class="container about">
+  <p>E-commerce (electronic commerce) is the activity of electronically buying or selling of products on online services or over the Internet. E-commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems. E-commerce is in turn driven by the technological advances of the semiconductor industry, and is the largest sector of the electronics industry.
+
+    E-commerce typically uses the web for at least a part of a transaction's life cycle although it may also use other technologies such as e-mail. Typical e-commerce transactions include the purchase of products (such as books from Amazon) or services (such as music downloads in the form of digital distribution such as iTunes Store).[1] There are three areas of e-commerce: online retailing, electronic markets, and online auctions. E-commerce is supported by electronic business.[2]
+    
+    E-commerce businesses may also employ some or all of the following:
+    
+    Online shopping for retail sales direct to consumers via web sites and mobile apps, and conversational commerce via live chat, chatbots, and voice assistants;[3]
+    Providing or participating in online marketplaces, which process third-party business-to-consumer (B2C) or consumer-to-consumer (C2C) sales;
+    Business-to-business (B2B) buying and selling;[4]
+    Gathering and using demographic data through web contacts and social media;
+    B2B electronic data interchange;
+    Marketing to prospective and established customers by e-mail or fax (for example, with newsletters);
+    Engaging in pretail for launching new products and services;
+    Online financial exchanges for currency exchanges or trading purposes.</p>
+
+</div>
+
+
+
+{% endblock %}

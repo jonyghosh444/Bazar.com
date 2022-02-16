@@ -15,4 +15,17 @@ class Product(models.Model):
     pub_date = models.DateField()
 
     def __str__(self):
-        return self.product_name
+        details = f"{self.product_name}___{self.category}__{self.price} Tk."
+        return details
+
+
+class Contact(models.Model):
+    contact_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=54)
+    email = models.CharField(max_length=100, default="")
+    phone = models.IntegerField(default=0)
+    message = models.CharField(max_length=2000, default="")
+
+    def __str__(self):
+        txt = f"{self.name}:- {self.message}"
+        return txt
