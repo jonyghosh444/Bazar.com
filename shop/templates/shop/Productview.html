@@ -8,7 +8,7 @@ width: 450px;
 
 }
 .col-md-6{
-    padding-left: 80px;
+padding-left: 80px;
 
 }
 
@@ -19,38 +19,136 @@ width: 450px;
 
 
 <div class="container mt-3">
-    
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-4">
 
-                <div class="conatiner mt-5 py-5">
-                    <img src="/media/{{product.image}}" alt="">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-4">
 
-                </div>
-                <div class="container py-3" style="text-align: center;">
-                    <span id="divpr{{product.id}}" class="divpr">
-                        <button  id="pr{{product.id}}" class="btn btn-primary mt-3 cart">Add To Cart</button></span>
-                    <button class="btn btn-primary mt-3 cart" style="text-align: end;">Buy Now</button>
-                </div>
+            <div class="conatiner mt-5 py-5">
+                <img src="/media/{{product.image}}" alt="">
 
             </div>
-            <div class="col-lg-6 col-md-6 col-6" >
+            <div class="container py-3" style="text-align: center;">
+                
+                  <span id="divproduct" class="divpr">            
+                    <button id="pr{{product.id}}" class="btn btn-primary mt-3 cart">Add To Cart</button>
+                <span  class="buynow"> 
+                <a href="/shop/checkout"><button id="pr{{product.id}}" class="btn btn-primary mt-3 buynow" style="text-align: end;">Buy Now</button></a></span>
+            </div></span>
 
-                <div class="container" style="text-align: center;">
-                    <h1>{{product.product_name}}</h1>
-                    <b><b>&#2547;</b>{{product.price}}</b>
-                    <p style="text-align: left;">{{product.desc}}</p>
-                </div>
-            </div>
-            <div class="col-lg-8 col-md-8 col-8" style="text-align: center;">
+        </div>
+        <div class="col-lg-6 col-md-6 col-6">
+
+            <div class="container" style="text-align: center;">
+                <h1 class="productName" style="text-align: center;" id="namepr{{product.id}}">{{product.product_name}}
+                </h1>
+                <h6 class="productId" style="text-align: center;" id="productId">pr{{product.id}}</h6>
+                <b><b>Price: &#2547;</b>{{product.price}}</b>
+                <p style="text-align: left;">{{product.desc}}</p>
             </div>
         </div>
-    
+        <div class="col-lg-8 col-md-8 col-8" style="text-align: center;">
+        </div>
+    </div>
+
 
 
 </div>
-
-
 {% endblock %}
 
+{% block js %}
+<script>
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        
+        cartItemCount(cart)
+    }
+    console.log(cart)
+    
+    // click action on buy-now
+    $('.buynow').on('click', 'button.buynow', function () {
 
+    var idstr = this.id.toString();
+
+    if (cart[idstr] != undefined) {
+        qty = cart[idstr][0] + 1;
+        cart[idstr] = [qty, name];
+    }
+    else {
+        qty = 1;
+        name = document.getElementById('name' + idstr).innerHTML;
+        cart[idstr] = [qty, name];
+    }
+    cartItemCount(cart)
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    });
+
+    // Adding item by click
+    $('.divpr').on('click', 'button.cart', function () {
+
+        var idstr = this.id.toString();
+
+        if (cart[idstr] != undefined) {
+            qty = cart[idstr][0] + 1;
+            cart[idstr] = [qty, name];
+        }
+        else {
+            qty = 1;
+            name = document.getElementById('name' + idstr).innerHTML;
+            cart[idstr] = [qty, name];
+        }
+        cartItemCount(cart)
+        updateCart(cart);
+
+    });
+
+    // Cont total item in Cart
+    function cartItemCount(cart){
+    sum = 0
+    for(var item in cart){
+        let qty = cart[item][0]
+        sum = sum + qty
+        document.getElementById('cart').innerHTML = sum;
+    };
+    }
+
+    function updateCart(cart) {
+    
+    prodId = document.getElementById('productId').innerHTML;
+    console.log(prodId)
+    productQty = cart[prodId][0]
+    console.log(productQty)
+    document.getElementById('divproduct').innerHTML = "<div><button id='minus" + prodId + "'class='btn btn-primary minus'>-</button> <span id='val" + prodId + "''>" + productQty + "</span> <button id='plus" + prodId + "' class='btn btn-primary plus'> + </button></div><a href='/shop/checkout'><button  class='btn btn-primary mt-3 buynow' style='text-align: end;''>Buy Now</button></a>";
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    console.log(cart);   
+    };
+    
+    // For plus 
+    $('.divpr').on("click", "button.plus", function () {
+        b = this.id.slice(6,)
+        cart['pr' + b][0] = cart['pr' + b][0] + 1
+        document.getElementById('valpr' + b).innerHTML = cart['pr' + b][0]
+        updateCart(cart)
+        cartItemCount(cart)
+
+    });
+
+//   // For minus
+    $('.divpr').on("click", "button.minus", function () {
+        a = this.id.slice(7,)
+        cart['pr' + a][0] = cart['pr' + a][0] - 1
+        cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+        document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0]
+        updateCart(cart)
+        cartItemCount(cart)
+        
+
+    });
+
+    
+</script>
+{% endblock %}
