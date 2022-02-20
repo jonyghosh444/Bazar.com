@@ -29,3 +29,19 @@ class Contact(models.Model):
     def __str__(self):
         txt = f"{self.name}:- {self.message}"
         return txt
+
+
+class Order(models.Model):
+    item_json = models.CharField(max_length=5000)
+    order_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=54)
+    email = models.CharField(max_length=100, default="")
+    phone = models.CharField(max_length=100, default="")
+    adress = models.CharField(max_length=2000)
+    city = models.CharField(max_length=2000)
+    division = models.CharField(max_length=2000)
+    zip_code = models.CharField(max_length=100)
+
+    def __str__(self):
+        txt = f"Orederid:##00{self.order_id} {self.name} {self.phone}"
+        return txt

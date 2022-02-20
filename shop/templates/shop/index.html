@@ -143,7 +143,7 @@ height: 170px;
     var i = 1;
     for (var item in cart) {
       popStr = popStr + "<b>" + i + "</b>. ";
-      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 15) + "..." + " Qty: " + cart[item] + '<br>'
+      popStr = popStr + document.getElementById('name' + item).innerHTML + " Qty: " + cart[item][0] + '<br>'
       i = i + 1;
     };
     // popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id='checkout'>Check out</button></a> <button class='btn btn-primary' onclick='clearCArt()' id='clearcart'>Clear cart</button>"

@@ -1,17 +1,12 @@
 # Hare krishna
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product,Contact
+from .models import Product, Contact, Order
 from math import ceil
 # Create your views here.
 
 
 def Index(request):
-    # products = Product.objects.all()
-    # n = len(products)
-    # nSlides = n//6 + ceil((n/6)-(n//6))
-    # allProds = [[products, range(1, nSlides), nSlides],
-    #             [products, range(1, nSlides), nSlides]]
     allProds = []
     catprods = Product.objects.values('category', 'id')
     cats = {item['category'] for item in catprods}
@@ -20,9 +15,7 @@ def Index(request):
         n = len(prod)
         nSlides = n//6 + ceil((n/6) - (n//6))
         allProds.append([prod, range(1, nSlides), nSlides])
-
     params = {'allProds': allProds}
-    # params = {'no_of_slides': nSlides, 'range': range(1, nSlides), 'product': products}
     return render(request, 'shop/index.html', params)
 
 
@@ -57,4 +50,18 @@ def ProductView(request, myid):
 
 
 def Checkout(request):
+    if request.method == 'POST':
+        item_json = request.POST.get("itemJson", "")
+        name = request.POST.get("name", "")
+        email = request.POST.get("email", "")
+        phoneno =request.POST.get("phone", "")
+        adress = request.POST.get("adress1", "")+""+request.POST.get("adress2", "")
+        city = request.POST.get("city", "")
+        division = request.POST.get("division", "")
+        zip_code = request.POST.get("zip_code", "")
+        order = Order(item_json=item_json,name=name, email=email, phone=phoneno, adress=adress, city=city, division=division, zip_code=zip_code)
+        order.save()
+        thank = True
+        id = order.order_id
+        return render(request, 'shop/Checkout.html', {'thank': thank, "id": id})
     return render(request, 'shop/Checkout.html')

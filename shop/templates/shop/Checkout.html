@@ -34,39 +34,40 @@ width: 700px;
     <div class="col my-3">
         <h2>Step 2 - Enter your address and other details</h2>
         <div class="mt-3">
-            <form class="row g-3">
+            <form class="row g-3" action="/shop/checkout/" method="post">{% csrf_token %}
+                <input type="hidden" name="itemJson" id="itemJson">
                 <div class="col-md-4">
+                    
                     <label for="inputName" class="form-label">Name</label>
-                    <input type="name" class="form-control" id="inputName" placeholder="Name">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                 </div>
                 <div class="col-md-4">
                     <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                 </div>
                 <div class="col-md-4">
                     <label for="inputEmail4" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="inputPhone" placeholder="01XXXXXXXXX">
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="01XXXXXXXXX">
                 </div>
                 <div class="col-12">
                     <label for="inputAddress" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    <input type="text" class="form-control" id="adress1" name="adress1" placeholder="1234 Main St">
                 </div>
                 <div class="col-12">
                     <label for="inputAddress2" class="form-label">Address line 2</label>
-                    <input type="text" class="form-control" id="inputAddress2"
-                        placeholder="Apartment, studio, or floor">
+                    <input type="text" class="form-control" id="adress2" name="adress2" placeholder="Apartment, studio, or floor">
                 </div>
                 <div class="col-md-6">
                     <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="City">
+                    <input type="text" class="form-control" id="city" name="city" placeholder="City">
                 </div>
                 <div class="col-md-4">
                     <label for="inputState" class="form-label">Division</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Division">
+                    <input type="text" class="form-control" id="division" name="division" placeholder="Division">
                 </div>
                 <div class="col-md-2">
                     <label for="inputZip" class="form-label">Zip</label>
-                    <input type="text" class="form-control" id="inputZip" placeholder="Zip">
+                    <input type="text" class="form-control" id="zip_code" name="zip_code" placeholder="Zip">
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Place order</button>
@@ -87,7 +88,7 @@ width: 700px;
         cart = JSON.parse(localStorage.getItem('cart'));
     }
     console.log(cart)
-    sum = 0
+    
 
     if ($.isEmptyObject(cart)) {
         // if cart is empty
@@ -98,7 +99,6 @@ width: 700px;
         for (item in cart) {
             let name = cart[item][1]
             let qty = cart[item][0]
-            sum = sum + qty
             if (qty < 1) {
                 mystr = `<p>Your Cart is empty, please add some items to your cart before checking out!</p>`
                 $('#items').append(mystr);
@@ -113,10 +113,18 @@ width: 700px;
             }
         }
     }
-
-
-
-
+    sum = 0
+    for(var item in cart){
+        let qty = cart[item][0]
+        sum = sum + qty
+        document.getElementById('cart').innerHTML = sum;
+    };
+    $('#itemJson').val(JSON.stringify(cart));
+    {% if thank %}
+    alert('Thanks for shoping with us. Your order is {{id}}. Use it to track your order using our order tracker');
+    localStorage.clear();
+    document.location = "/shop"
+    {% endif %}
 
 </script>
 {% endblock %}
