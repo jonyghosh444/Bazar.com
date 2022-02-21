@@ -45,3 +45,14 @@ class Order(models.Model):
     def __str__(self):
         txt = f"Orederid:##00{self.order_id} {self.name} {self.phone}"
         return txt
+
+
+class OrderUpdate(models.Model):
+    update_id = models.AutoField(primary_key=True)
+    order_id = models.IntegerField(default="")
+    update_desc = models.CharField(max_length=5000)
+    timestamp = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        text = self.update_desc
+        return text

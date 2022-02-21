@@ -1,17 +1,124 @@
+<!-- Hare Krishna -->
 {% extends 'shop/basic_layout.html' %}
 
 {% block title %}Tracker{% endblock %}
 {% block css %}
 
+.chkpg {
+width: 1000px;
 }
+.pitem{
+width: 700px;
+}
+
 {% endblock %}
 {% block body %}
-<kbd>Hare krishna</kbd>
 
-<details>
-    <summary>Mahamantro</summary>
-    <p>Hare krishna hare krishna krishna krishna hare hare hare ramo hare ramo ramo ramo hare hare</p>
-</details>
+<style>
+    .chkpg {
+        width: 1000px;
+    }
 
-'<div class="p-1"><ol><li>Item</li><li>Item</li><li>Item</li><ol></br> <a href="#" id="checkOut" class="btn btn-sm btn-success">Check Out</a> <a href="#" class="btn btn-sm btn-danger">Clear Cart</a></div>'
+    .pitem {
+        width: 700px;
+    }
+</style>
+
+<div class="container chkpg">
+    <div class="col pitem my-4">
+        <h2> Enter your Order Id and Email adress to track your order</h2>
+        <form class="row g-3" action="#" id="trackerForm">{% csrf_token %}
+            <div class="col-md-4">
+
+                <label for="inputName" class="form-label">Order Id</label>
+                <input type="text" class="form-control" id="orderId" name="orderId" placeholder="XXXXXX">
+            </div>
+            <div class="col-md-4">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Track order</button>
+            </div>
+        </form>
+    </div>
+    <div class="col my-3">
+
+        <div class="mt-3">
+            <ul class="list-group" id="items">
+                <p style="color: rgb(10, 233, 22);"> Enter your order Id an Email to track your order. </p>
+            </ul>
+        </div>
+        <div class="mt-3">
+            <ul class="list-group" id="citems">              
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+{% block js %}
+<script>
+    $('#trackerForm').submit(function (event) {
+
+        $('#items').empty();
+        var formData = {
+            'orderId': $('input[name=orderId]').val(),
+            'email': $('input[name=email]').val(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/shop/tracker/',
+            data: formData,
+            encode: true
+
+        })
+            .done(function (data) {
+                Data = JSON.parse(data)
+                updates = Data[0];
+                if (updates.length > 0 & updates != {}) {
+                    s = `<h2>Your order status:</h2>`
+                    $('#items').append(s);
+                    for (i = 0; i < updates.length; i++) {
+                        let text = updates[i]['text'];
+                        let time = updates[i]['time'];
+                        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${text}
+                        <span class="badge bg-primary rounded-pill">${time}</span>
+                        </li>`
+                        $('#items').append(mystr);
+                    }
+                } else {
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center"><p style="color: red;">Sorry couldn't find your order in list. Enter correct Order Id and Email.</p></li>`
+                    $('#items').append(mystr);
+                }
+                //Fill in the order details
+                cart =JSON.parse(Data[1])
+                title = `<h2>Your order Items:</h2>`
+                    $('#citems').append(title);
+                for (item in cart) {
+                    let name = cart[item][1]
+                    let qty = cart[item][0]
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${name}
+                    <span class="badge bg-primary rounded-pill">${qty}</span>
+                    </li>`
+                    $('#citems').append(mystr);
+                }
+
+
+            });
+        event.preventDefault()
+
+
+    })
+
+
+</script>
 {% endblock %}
