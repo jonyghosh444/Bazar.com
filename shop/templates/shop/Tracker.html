@@ -66,6 +66,7 @@ width: 700px;
     $('#trackerForm').submit(function (event) {
 
         $('#items').empty();
+        $('#citems').empty();
         var formData = {
             'orderId': $('input[name=orderId]').val(),
             'email': $('input[name=email]').val(),
@@ -82,7 +83,7 @@ width: 700px;
             .done(function (data) {
                 Data = JSON.parse(data)
                 updates = Data[0];
-                if (updates.length > 0 & updates != {}) {
+                if (Data.length > 0 & Data != {}) {
                     s = `<h2>Your order status:</h2>`
                     $('#items').append(s);
                     for (i = 0; i < updates.length; i++) {
@@ -94,15 +95,10 @@ width: 700px;
                         </li>`
                         $('#items').append(mystr);
                     }
-                } else {
-                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center"><p style="color: red;">Sorry couldn't find your order in list. Enter correct Order Id and Email.</p></li>`
-                    $('#items').append(mystr);
-                }
-                //Fill in the order details
-                cart =JSON.parse(Data[1])
-                title = `<h2>Your order Items:</h2>`
+                    cart =JSON.parse(Data[1])
+                    title = `<h2>Your order Items:</h2>`
                     $('#citems').append(title);
-                for (item in cart) {
+                    for (item in cart) {
                     let name = cart[item][1]
                     let qty = cart[item][0]
                     mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -111,6 +107,12 @@ width: 700px;
                     </li>`
                     $('#citems').append(mystr);
                 }
+
+                } else {
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center"><p style="color: red;">Sorry couldn't find your order in list. Enter correct Order Id and Email.</p></li>`
+                    $('#items').append(mystr);
+                }
+                //Fill in the order details
 
 
             });

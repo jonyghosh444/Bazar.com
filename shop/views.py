@@ -49,7 +49,7 @@ def Tracker(request):
                     response = json.dumps([updates, order[0].item_json], default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse("{}")
+                return HttpResponse("[]")
 
         except Exception as e:
             return HttpResponse("{}")
