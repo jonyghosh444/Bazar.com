@@ -58,23 +58,17 @@
                         <a class="nav-link active" aria-current="page" href="/shop">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/shop/tracker">Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/shop/about">About Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/shop/contact">Contact Us</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            More
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/shop/tracker">Tracker</a></li>
-                    </li>
-                    <li><a class="dropdown-item" href="/shop/checkout">CheckOut</a></li>
-                </ul>
-                </li>
 
                 </ul>
 
@@ -86,7 +80,7 @@
                     data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom"
                     data-bs-content="Bottom popover">
                     Cart(<span id="cart">0</span>)
-                    
+
                 </button>
                 {% block clearandcheckoutbutton %}{% endblock %}
 

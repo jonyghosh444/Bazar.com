@@ -40,8 +40,14 @@
 
 
 </div>
-
-
-
+{% block js %}
+<script>
+{% if thank %}
+    alert('Your message has sent successfully.');
+    localStorage.clear();
+    document.location = "/shop/contact"
+    {% endif %}
+</script>
+{% endblock %}
 
 {% endblock %}
