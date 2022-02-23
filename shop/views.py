@@ -56,8 +56,6 @@ def Tracker(request):
         except Exception as e:
             return HttpResponse("{}")
 
-
-
     return render(request, 'shop/Tracker.html')
 
 
@@ -76,13 +74,14 @@ def Checkout(request):
     if request.method == 'POST':
         item_json = request.POST.get("itemJson", "")
         name = request.POST.get("name", "")
+        amount = request.POST.get("amount", "")
         email = request.POST.get("email", "")
         phoneno =request.POST.get("phone", "")
         adress = request.POST.get("adress1", "")+""+request.POST.get("adress2", "")
         city = request.POST.get("city", "")
         division = request.POST.get("division", "")
         zip_code = request.POST.get("zip_code", "")
-        order = Order(item_json=item_json,name=name, email=email, phone=phoneno, adress=adress, city=city, division=division, zip_code=zip_code)
+        order = Order(item_json=item_json, name=name, amount=amount, email=email, phone=phoneno, adress=adress, city=city, division=division, zip_code=zip_code)
         order.save()
         update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed.")
         update.save()
